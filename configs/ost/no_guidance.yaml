@@ -1,0 +1,9 @@
+# Matched control with verdict-conditioned rewriting disabled (lambda_0 = 0).
+# The rest of the loop, including retraction, is unchanged.
+#
+# Also the configuration to reach for when a clip with refutations will not finish: guided
+# decoding evaluates two branches per generated token, so a guided stage is the expensive
+# part of a long run.
+_base_: default.yaml
+guidance:
+  lambda_0: 0.0

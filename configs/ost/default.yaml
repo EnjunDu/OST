@@ -1,0 +1,91 @@
+# OST default inference configuration.
+#
+# Values reproduce the paper's default configuration table. Paths are deliberately empty:
+# fill in `model.path` and the `*_path` checkpoint fields below, pass the equivalent flags,
+# or export OST_MODEL_PATH. Relative paths resolve against the working directory.
+
+streaming:
+  perception_interval_seconds: 1.0    # perception runs every second
+  decision_interval_seconds: 4.0      # each decision chunk spans 4 s
+  frames_per_second: 1.0
+  audio_sample_rate: 16000
+
+claims:
+  window_durations: [4.0, 8.0, 16.0]  # allowed evidence-window durations
+  max_window_seconds: 16.0            # delta_max
+  retry_slack_seconds: 4.0            # delta_prime
+  max_per_chunk: 2                    # C_max
+  max_active: 8                       # Q_max
+  max_depth: 3                        # D_max
+
+retention:
+  visual_tokens: 4096                 # B_V
+  audio_tokens: 2048                  # B_A
+  reasoning_tokens: 3072              # B_R, the reasoning ledger budget
+  floor_seconds: 24.0                 # delta_max + delta_prime + decision interval
+  state_window_seconds: 4.0           # dense window read by the state context
+  answer_window_seconds: 8.0          # dense window read by the answer context
+  sparse_retrieval_slots: 8
+  score_weights:
+    visual_change: 1.0
+    audio_salience: 1.0
+    query_relevance: 1.0
+    co_occurrence: 1.0
+
+memory:
+  keep_archive: true                  # set false to bound memory on a very long stream
+  pyramid:
+    branching: 4
+    capacities: [6, 4, 4]             # (K1, K2, K3)
+    root_capacity: 1                  # one long-term memory root
+
+verifier:
+  # Geometry of the scoring head. A checkpoint carrying its own verifier_head.json
+  # overrides these; they are the fallback for one that does not.
+  hidden_dim: 2048
+  head_dim: 512
+  modality_embedding_dim: 32
+  axiom_cap: 0.55                     # AXIOM_CAP
+  thresholds:                         # per-modality verdict bands
+    audio: {low: 0.35, high: 0.65}
+    visual: {low: 0.35, high: 0.65}
+    audio_visual: {low: 0.35, high: 0.65}
+  head_path: null                     # e.g. checkpoints/verifier
+  thresholds_path: null               # e.g. checkpoints/verifier/calibration.json
+
+retraction:
+  rho_min: 0.05                       # reliability floor
+  kappa: null                         # null derives it from rho_min and q_0.95(gamma)
+  kappa_cap: 4.0
+
+guidance:
+  lambda_0: 1.0                       # the paper reports guidance on
+
+decoding:
+  attention_backend: sdpa             # must accept a 4-D additive mask
+  grammar: true
+  temperature: 0.0
+  top_p: 1.0
+  max_new_tokens_state: 224
+  max_new_tokens_forecast: 96
+  max_new_tokens_answer: 128
+  seed: 0
+
+gate:
+  learned_head_enabled: true          # false leaves only the hard rule of Eq. (16)
+  threshold: 0.5
+  head_path: null                     # e.g. checkpoints/gate
+
+forecaster:
+  disable_policy_adapter: true        # App. A.5
+  prompt_path: null                   # e.g. checkpoints/forecaster
+
+policy:
+  adapter_path: null                  # e.g. checkpoints/policy
+
+model:
+  backend: qwen_omni
+  path: null                          # e.g. models/Qwen3-Omni-30B-A3B-Instruct
+  dtype: bfloat16
+  device: cuda:0
+  use_audio_in_video: true

@@ -1,0 +1,104 @@
+# ---------------------------------------------------------------------------
+# Media. None of this belongs in a code repository.
+# ---------------------------------------------------------------------------
+/clips/
+*.mp4
+*.mkv
+*.avi
+*.webm
+*.mov
+*.wav
+*.m4a
+*.mp3
+*.flac
+*.ogg
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.npy
+*.npz
+/frames/
+
+# ---------------------------------------------------------------------------
+# Model weights, adapters, heads and caches.
+# ---------------------------------------------------------------------------
+/models/
+/weights/
+/checkpoints/
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.gguf
+adapter_model*
+/thinker_lora/
+soft_prompt.pt
+verifier_head.pt
+gate_head.pt
+calibration.json
+.cache/
+/hf_cache/
+/huggingface/
+/transformers_cache/
+
+# ---------------------------------------------------------------------------
+# Run outputs. The code that produces a result belongs here; the result does not.
+# ---------------------------------------------------------------------------
+/output/
+/outputs/
+/runs/
+/results/
+*.inference.json
+/logs/
+*.log
+*.out
+*.err
+
+# ---------------------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+/build/
+/dist/
+*.egg-info/
+.eggs/
+
+# ---------------------------------------------------------------------------
+# Environments and tooling
+# ---------------------------------------------------------------------------
+.venv/
+venv/
+env/
+ENV/
+.python-version
+.mypy_cache/
+.ruff_cache/
+
+# ---------------------------------------------------------------------------
+# Editors and operating systems
+# ---------------------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ---------------------------------------------------------------------------
+# Secrets. Nothing of this kind should ever exist in this tree.
+# ---------------------------------------------------------------------------
+.env
+.env.*
+*.pem
+*.key
+credentials.json
+secrets.yaml
+.netrc
+.huggingface/

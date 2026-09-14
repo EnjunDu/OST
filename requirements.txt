@@ -1,0 +1,33 @@
+# Requirements for Omni-Streaming Thinking inference.
+#
+# Python >= 3.11.
+#
+# PyTorch: install the build matching your CUDA toolkit first, from pytorch.org. The pin
+# below is a lower bound, not a recommendation to use the CPU wheel; the backbone needs a
+# GPU.
+#   CUDA 12.8 example:
+#   pip install torch --index-url https://download.pytorch.org/whl/cu128
+torch>=2.6
+
+# Multimodal backbone and adapters.
+transformers>=4.51
+accelerate>=1.0
+peft>=0.14
+safetensors>=0.4
+
+# The backbone's multimodal preprocessor.
+qwen-omni-utils>=0.0.4
+
+# Grammar-constrained decoding for the state and forecast lanes.
+xgrammar>=0.1.15
+
+# Media decoding, used by the preprocessor and by the clip extractor. ffmpeg and ffprobe
+# must also be on PATH (or set OST_FFMPEG / OST_FFPROBE).
+av>=12.0
+decord>=0.6.0
+librosa>=0.10
+soundfile>=0.12
+
+# Numerics and configuration.
+numpy>=1.26
+pyyaml>=6.0

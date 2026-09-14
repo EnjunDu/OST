@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ost"
+version = "1.0.0"
+description = "Omni-Streaming Thinking: streaming audio-visual inference with future claims, typed verification and dependency-aware retraction."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+classifiers = [
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+  "torch>=2.6",
+  "transformers>=4.51",
+  "accelerate>=1.0",
+  "peft>=0.14",
+  "safetensors>=0.4",
+  "qwen-omni-utils>=0.0.4",
+  "xgrammar>=0.1.15",
+  "av>=12.0",
+  "decord>=0.6.0",
+  "librosa>=0.10",
+  "soundfile>=0.12",
+  "numpy>=1.26",
+  "pyyaml>=6.0",
+]
+
+[project.scripts]
+ost = "ost.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["ost*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "C4", "SIM"]
+ignore = [
+  "E501",   # line length is enforced by the formatter, not the linter
+  "B008",   # dataclass field defaults via factories read better inline
+]
+
+[tool.mypy]
+python_version = "3.11"
+warn_unused_ignores = true
+ignore_missing_imports = true

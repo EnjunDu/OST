@@ -1,0 +1,35 @@
+# Inference with every learned component loaded from a checkpoint.
+#
+# This is the configuration to copy and edit. It names each checkpoint in one place, so a
+# run needs no flags beyond the clip and the question:
+#
+#   python -m ost.cli infer --config configs/ost/with_checkpoints.yaml \
+#       --media clips/example.mp4 --question "..." --output_dir ../output
+#
+# Paths are relative to the working directory, which is assumed to be the repository root.
+# A path that is set but absent is an error rather than a silent fallback to the
+# unmodified component, so a partially-populated directory cannot quietly change a run.
+_base_: default.yaml
+
+model:
+  path: ../models/Qwen3-Omni-30B-A3B-Instruct
+
+verifier:
+  # Directory holding verifier_head.pt, and verifier_head.json if the checkpoint carries
+  # its geometry. Without a head the runtime uses a zero-shot verifier and marks the run.
+  head_path: ./checkpoints/verifier
+  # JSON with the per-modality verdict bands and the retraction scale kappa. These decide
+  # which scores count as a refutation, so they belong with the head they go with.
+  thresholds_path: ./checkpoints/verifier/calibration.json
+
+gate:
+  # Directory holding gate_head.pt.
+  head_path: ./checkpoints/gate
+
+forecaster:
+  # Directory holding soft_prompt.pt. Its length is taken from the checkpoint.
+  prompt_path: ./checkpoints/forecaster
+
+policy:
+  # Directory holding adapter_config.json, either directly or under ./thinker_lora.
+  adapter_path: ./checkpoints/policy
