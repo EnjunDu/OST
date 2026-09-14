@@ -3,6 +3,9 @@
 Inference implementation of **Omni-Streaming Thinking**, a streaming audio–visual
 reasoning system.
 
+**Project page: [enjundu.com/blog/ost](https://enjundu.com/blog/ost/)** — method overview,
+a walkthrough of the claim–verify–retract loop, and the reported results.
+
 A streaming model must decide *what* and *when* to answer from only the video chunks and
 audio observed so far. Visual cues often support an interpretation before an utterance or
 sound event is complete. If that interpretation enters memory as a fact, later reasoning
@@ -358,14 +361,15 @@ See §9: guided decoding is quadratic in the generated length. Reduce
 ## 12. Citation
 
 ```bibtex
-@inproceedings{ost_anonymous,
-  title     = {Omni-Streaming Thinking},
-  author    = {Anonymous},
-  booktitle = {Under review},
-  year      = {2026},
-  note      = {Code: this repository}
+@article{du2026omni,
+  title   = {Omni-Streaming Thinking},
+  author  = {Enjun Du and Siyi Liu and Ziyu Zheng and Jingyu Li and Yiwen Guo and
+             Yongqi Zhang and Difan Zou},
+  year    = {2026}
 }
 ```
+
+Project page: [enjundu.com/blog/ost](https://enjundu.com/blog/ost/).
 
 ## License
 
